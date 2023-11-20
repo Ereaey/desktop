@@ -1,0 +1,19 @@
+---
+- name: Add docker
+  block:
+    - name: Download keyring
+      ansible.builtin.get_url:
+        url: "https://download.docker.com/linux/debian/gpg"
+        dest: /etc/apt/keyrings/docker.asc
+
+    - name: Add apt source
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+        state: present
+
+- name: Install docker packages
+  ansible.builtin.apt:
+    name: "{{ docker_packages }}"
+    state: present
+    update_cache: yes
+

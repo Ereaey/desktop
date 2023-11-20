@@ -1,0 +1,12 @@
+jetbrains_toolbox_install_script: "https://raw.githubusercontent.com/nagygergo/jetbrains-toolbox-install/master/jetbrains-toolbox.sh"
+required_packages:
+  - libfuse2
+  - libxi6
+  - libxrender1
+  - libxtst6
+  - mesa-utils
+  - libfontconfig
+  - libgtk-3-bin
+  - tar
+  - curl
+  - wget

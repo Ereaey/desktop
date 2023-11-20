@@ -1,0 +1,16 @@
+- name: Check Oh-My-Zsh is installed
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmyzsh_installed
+
+- name: Install Oh-My-Zsh
+  shell: sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+  when: not ohmyzsh_installed.stat.exists
+
+- name: Activate plugins (pyenv, npm, git) in .zshrc
+  lineinfile:
+    path: ~/.zshrc
+    line: 'plugins=(git pyenv npm ssh-agent aliases starship)'
+    create: yes
+    state: present
+  when: not ohmyzsh_installed.stat.exists

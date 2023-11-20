@@ -1,0 +1,7 @@
+- name: Construire l'exemple Blinky pour une carte spécifique
+  become_user: "{{ user_var }}"
+  shell: |
+    cd ~/zephyrproject/zephyr
+    west build -p always -b nucleo_f411re samples/basic/blinky
+  args:
+    executable: /bin/bash

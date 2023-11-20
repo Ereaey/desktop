@@ -1,0 +1,33 @@
+- name: Créer un environnement virtuel pour Zephyr
+  command: python3 -m venv /home/{{ user_var }}/zephyrproject/.venv
+  args:
+    creates: "/home/{{ user_var }}/zephyrproject/.venv"
+
+- name: Installer west dans l'environnement virtuel
+  shell: /home/{{ user_var }}/zephyrproject/.venv/bin/pip install west
+  args:
+    executable: /bin/bash
+
+- name: Initialiser le dépôt Zephyr avec west
+  shell: |
+    source /home/{{ user_var }}/zephyrproject/.venv/bin/activate
+    west init /home/{{ user_var }}/zephyrproject
+    cd /home/{{ user_var }}/zephyrproject
+    west update
+  args:
+    executable: /bin/bash
+    creates: "/home/{{ user_var }}/zephyrproject/zephyr"
+
+#- name: Exporter le paquet Zephyr CMake
+#  shell: |
+#    source /home/{{ user_var }}/zephyrproject/.venv/bin/activate
+#    west zephyr-export
+#  args:
+#    executable: /bin/bash
+
+- name: Installer les dépendances Python de Zephyr
+  shell: |
+    source /home/{{ user_var }}/zephyrproject/.venv/bin/activate
+    pip install -r /home/{{ user_var }}/zephyrproject/zephyr/scripts/requirements.txt
+  args:
+    executable: /bin/bash

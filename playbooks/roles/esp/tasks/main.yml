@@ -1,0 +1,45 @@
+---
+- name: Installer les dépendances nécessaires pour ESP-IDF
+  become: true
+  apt:
+    name:
+      - git
+      - wget
+      - flex
+      - bison
+      - gperf
+      - python3
+      - python3-pip
+      - python3-venv
+      - cmake
+      - ninja-build
+      - ccache
+      - libffi-dev
+      - libssl-dev
+      - dfu-util
+      - libusb-1.0-0
+    state: present
+    update_cache: yes
+
+- name: Cloner le dépôt ESP-IDF
+  become_user: "{{ user_var }}"
+  git:
+    repo: 'https://github.com/espressif/esp-idf.git'
+    dest: "{{ esp_idf_install_dir }}"
+    version: "{{ esp_idf_version }}"
+    clone: yes
+    update: yes
+
+- name: Installer ESP-IDF
+  become_user: "{{ user_var }}"
+  shell: "{{ esp_idf_install_dir }}/install.sh"
+  args:
+    chdir: "{{ esp_idf_install_dir }}"
+    executable: /bin/bash
+
+- name: Configurer l'environnement ESP-IDF dans le fichier de profil de l'utilisateur
+  become_user: "{{ user_var }}"
+  lineinfile:
+    path: "/home/{{ user_var }}/.zshrc"
+    line: 'source "{{ esp_idf_install_dir }}/export.sh"'
+    create: yes

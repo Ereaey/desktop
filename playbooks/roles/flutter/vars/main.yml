@@ -1,0 +1,4 @@
+---
+flutter_version: "3.16.0"
+flutter_sdk_url: "https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_{{ flutter_version }}-stable.tar.xz"
+flutter_install_dir: "/opt/flutter"

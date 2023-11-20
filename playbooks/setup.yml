@@ -1,0 +1,13 @@
+---
+- name: Set up the Development and DevOps environment
+  hosts: local
+  become: yes
+  roles:
+    - user
+    - tools
+    - chrome
+    - docker
+    - jetbrains
+    - terminal
+    - flutter
+    - zephyr

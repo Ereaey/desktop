@@ -1,0 +1,39 @@
+---
+- name: Installer les dépendances nécessaires pour Flutter
+  become: true
+  apt:
+    name:
+      - curl
+      - xz-utils
+    state: present
+
+- name: Télécharger Flutter SDK
+  get_url:
+    url: "{{ flutter_sdk_url }}"
+    dest: "/tmp/flutter.tar.xz"
+
+- name: Créer le répertoire d'installation Flutter
+  become: true
+  file:
+    path: "{{ flutter_install_dir }}"
+    state: directory
+    owner: "{{ user_var }}"
+    group: "{{ user_var }}"
+    mode: '0755'
+
+- name: Extraire Flutter SDK
+  become: true
+  unarchive:
+    src: "/tmp/flutter.tar.xz"
+    dest: "{{ flutter_install_dir }}"
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+    creates: "{{ flutter_install_dir }}/bin/flutter"
+
+- name: Ajouter Flutter au PATH
+  become: yes
+  lineinfile:
+    path: "/home/{{ user_var }}/.zshrc"
+    line: 'export PATH="$PATH:{{ flutter_install_dir }}/bin"'
+    create: yes

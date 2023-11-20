@@ -1,0 +1,23 @@
+- name: Vérifier si Starship est installé
+  command: starship --version
+  register: starship_installed
+  ignore_errors: yes
+
+- name: Installer Starship
+  get_url:
+    url: https://starship.rs/install.sh
+    dest: /tmp/install_starship.sh
+    mode: '0755'
+  when: starship_installed.rc != 0
+
+- name: Exécuter le script d'installation de Starship
+  command: sh /tmp/install_starship.sh -y
+  when: starship_installed.rc != 0
+
+- name: Configurer ZSH pour utiliser Starship
+  lineinfile:
+    path: ~/.zshrc
+    line: 'eval "$(starship init zsh)"'
+    create: yes
+    state: present
+  when: starship_installed.rc != 0

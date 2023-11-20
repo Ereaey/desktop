@@ -1,0 +1,7 @@
+---
+- name: Install and Configure zsh
+  include_tasks: zsh.yml
+- name: Install and Configure starship
+  include_tasks: starship.yml
+- name: Install and Configure ohmyzsh
+  include_tasks: ohmyzsh.yml

@@ -1,0 +1,10 @@
+- name: Vérifier si ZSH est installé
+  command: zsh --version
+  register: zsh_installed
+  ignore_errors: yes
+
+- name: Installer ZSH
+  apt:
+    name: zsh
+    state: present
+  when: zsh_installed.rc != 0

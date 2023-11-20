@@ -1,0 +1,14 @@
+---
+dev_packages:
+  - git
+  - curl
+  - wget
+  - vim
+  - tmux
+  - htop
+  - python3-pip
+  - python3-setuptools
+  - build-essential
+  - libssl-dev
+  - jq
+  - unzip

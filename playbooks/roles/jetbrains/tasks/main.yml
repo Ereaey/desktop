@@ -1,0 +1,11 @@
+---
+- name: Installer dependancies
+  apt:
+    name: "{{ required_packages }}"
+    state: present
+
+- name: Download and launch install
+  shell: |
+    curl -fsSL {{ jetbrains_toolbox_install_script }} | bash
+  args:
+    executable: /bin/bash

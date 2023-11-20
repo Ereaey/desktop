@@ -1,0 +1,18 @@
+- name: Set timezone to Europe / Paris
+  become: true
+  timezone:
+    name: "Europe/Paris"
+
+- name: Add user to "sudo" group
+  become: true
+  user:
+    name: "{{ user_var }}"
+    groups: sudo,docker
+    append: yes
+
+- name: generate SSH key
+  user:
+    name: "{{ user_var }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_file: ~/.ssh/id_rsa
