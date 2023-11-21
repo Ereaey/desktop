@@ -16,7 +16,7 @@
 - name: Exécuter le script de configuration du SDK Zephyr
   become: true
   command:
-    cmd: "./setup.sh"
+    cmd: "./setup.sh -t all -h -c"
     chdir: "/opt/zephyr-sdk-0.16.3"
 
 - name: Installer les règles udev pour OpenOCD

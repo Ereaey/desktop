@@ -1,0 +1,5 @@
+- name: Create data folder
+  ansible.builtin.file:
+    path: "/home/{{ user_var }}/{{ item }}"
+    state: directory
+  loop: "{{ folders }}"

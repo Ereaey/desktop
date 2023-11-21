@@ -22,7 +22,7 @@
     update_cache: yes
 
 - name: Cloner le dépôt ESP-IDF
-  become_user: "{{ user_var }}"
+  become: true
   git:
     repo: 'https://github.com/espressif/esp-idf.git'
     dest: "{{ esp_idf_install_dir }}"
@@ -43,3 +43,15 @@
     path: "/home/{{ user_var }}/.zshrc"
     line: 'source "{{ esp_idf_install_dir }}/export.sh"'
     create: yes
+
+- name: Test
+  become_user: "{{ user_var }}"
+  shell: |
+    source {{ esp_idf_install_dir }}/export.sh
+    cd /tmp
+    cp -r {{ esp_idf_install_dir }}/examples/get-started/hello_world .
+    cd hello_world
+    idf.py set-target esp32
+    idf.py build
+  args:
+    executable: /bin/bash

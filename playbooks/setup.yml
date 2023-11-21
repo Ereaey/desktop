@@ -5,9 +5,11 @@
   roles:
     - user
     - tools
+    - folders
     - chrome
     - docker
     - jetbrains
     - terminal
     - flutter
     - zephyr
+    - esp
